@@ -77,6 +77,15 @@ def prompt_user():
             way_center.config(bg="SystemButtonFace")
             way_right.config(bg="Green")
 
+    def update_tooltip_bool():
+        if tool_bool.get() == False:
+            # Turn off tooltip entry
+            pass
+        else:
+            # Turn on tooltip entry
+            pass
+
+
 
     ########################
     ### Open User Window ###
@@ -129,13 +138,28 @@ def prompt_user():
     way_center.grid(column=1, row=7, sticky=W)
     way_right.grid(column=1, row=8, sticky=W)
 
-    # ROW 9 - Tooltip?
+    update_waybar_buttons()
 
-    # ROW 10 - Tooltip Label
+    # ROW 9 - EMPTY
+    ttk.Label(window, text=" ").grid(column=0, row=9)
 
-    # ROW 11 - Dropdown?
+    # ROW 10 - Tooltip?
+    tool_bool = ttk.BooleanVar(value=False)
+    ttk.Label(window, text="Include a Tooltip?:").grid(column=0,row=10, sticky=E)
+    tool_check_box = ttk.Checkbutton(window, variable=tool_bool, command=lambda: update_tooltip_bool())
+    tool_check_box.grid(column=1, row=10, sticky=W)
 
-    # ROW 12 - Exit Button
+    update_tooltip_bool()
+
+    # ROW 11 - Tooltip Label
+
+
+    # ROW 12 - Dropdown?
+
+    # ROW 13 - Empty
+    ttk.Label(window, text=" ").grid(column=0, row=13)
+
+    # ROW 14 - Exit Button
 
 
 
