@@ -64,26 +64,28 @@ def prompt_user():
     def update_waybar_buttons():
         if waybar_pos == "LEFT":
             way_left.config(bg="Green")
-            way_center.config(bg="SystemButtonFace")
-            way_right.config(bg="SystemButtonFace")
+            way_center.config(bg="White")
+            way_right.config(bg="White")
 
         elif waybar_pos == "CENTER":
-            way_left.config(bg="SystemButtonFace")
+            way_left.config(bg="White")
             way_center.config(bg="Green")
-            way_right.config(bg="SystemButtonFace")
+            way_right.config(bg="White")
 
         elif waybar_pos == "RIGHT":
-            way_left.config(bg="SystemButtonFace")
-            way_center.config(bg="SystemButtonFace")
+            way_left.config(bg="White")
+            way_center.config(bg="White")
             way_right.config(bg="Green")
 
     def update_tooltip_bool():
         if tool_bool.get() == False:
             # Turn off tooltip entry
-            pass
+            tool_label.grid_remove()
+            tool_entry.grid_remove()
         else:
             # Turn on tooltip entry
-            pass
+            tool_label.grid()
+            tool_entry.grid()
 
 
 
@@ -145,14 +147,20 @@ def prompt_user():
 
     # ROW 10 - Tooltip?
     tool_bool = ttk.BooleanVar(value=False)
+    tool_label = ttk.Label(window, text="Tooltip:")                 # In ROW 11, but needs to be defined before update_tooltip_bool
+    tooltip = ttk.StringVar()
+    tool_entry = ttk.Entry(window, width=40, textvariable=tooltip)  # In ROW 11, but needs to be defined before update_tooltip_bool
+
+
     ttk.Label(window, text="Include a Tooltip?:").grid(column=0,row=10, sticky=E)
-    tool_check_box = ttk.Checkbutton(window, variable=tool_bool, command=lambda: update_tooltip_bool())
+    tool_check_box = ttk.Checkbutton(window, variable=tool_bool, command=update_tooltip_bool)
     tool_check_box.grid(column=1, row=10, sticky=W)
 
-    update_tooltip_bool()
-
     # ROW 11 - Tooltip Label
+    tool_label.grid(column=0, row=11, sticky=E)
+    tool_entry.grid(column=1, row=11, sticky=W)
 
+    update_tooltip_bool()
 
     # ROW 12 - Dropdown?
 
