@@ -28,6 +28,7 @@ setup:s
 3) Modify config.json
     - See manage_config.py
 '''
+waybar_pos = "LEFT"
 
 def prompt_user():
 
@@ -45,13 +46,44 @@ def prompt_user():
 
         color = color[1]
 
+    def set_way_left():
+        global waybar_pos
+        waybar_pos = "LEFT"
+        update_waybar_buttons()
+
+    def set_way_right():
+        global waybar_pos
+        waybar_pos = "RIGHT"
+        update_waybar_buttons()
+
+    def set_way_center():
+        global waybar_pos
+        waybar_pos = "CENTER"
+        update_waybar_buttons()
+
+    def update_waybar_buttons():
+        if waybar_pos == "LEFT":
+            way_left.config(bg="Green")
+            way_center.config(bg="SystemButtonFace")
+            way_right.config(bg="SystemButtonFace")
+
+        elif waybar_pos == "CENTER":
+            way_left.config(bg="SystemButtonFace")
+            way_center.config(bg="Green")
+            way_right.config(bg="SystemButtonFace")
+
+        elif waybar_pos == "RIGHT":
+            way_left.config(bg="SystemButtonFace")
+            way_center.config(bg="SystemButtonFace")
+            way_right.config(bg="Green")
+
 
     ########################
     ### Open User Window ###
     ########################
 
     root = ttk.Tk()
-    window = ttk.Frame(root)
+    window = ttk.Frame(root, padx=10, pady=10)
     window.grid()
 
     # ROW 0 - Spacing
@@ -78,22 +110,32 @@ def prompt_user():
     command_entry.grid(column=1, row=3, sticky=W)
 
     # ROW 4 - Icon Color
-    color = ""
-
     ttk.Label(window, text="Choose Icon Color:").grid(column=0,row=4, sticky=E)
-    ttk.Button(window, text="Pick a Color", command=lambda: color_picker()).grid(column=1, row=4, sticky=W)
     selected_color = ttk.Label(window, text="No color selected")
     selected_color.grid(column=2, row=4, sticky=E)
+    ttk.Button(window, text="Pick a Color", command=lambda: color_picker()).grid(column=1, row=4, sticky=W)
 
-    # ROW 5 - Waybar Position
+    # ROW 5 - EMPTY
+    ttk.Label(window, text=" ").grid(column=0, row=5)
 
-    # ROW 6 - Tooltip?
+    # ROW 6,7,8 - Waybar Position
+    ttk.Label(window, text="Choose Icon Position:").grid(column=0,row=6, sticky=E)
 
-    # ROW 7 - Tooltip Label
+    way_left = ttk.Button(window, text="Left", command=set_way_left)
+    way_center = ttk.Button(window, text="Center", command=set_way_center)
+    way_right = ttk.Button(window, text="Right", command=set_way_right)
 
-    # ROW 8 - Dropdown?
+    way_left.grid(column=1, row=6, sticky=W)
+    way_center.grid(column=1, row=7, sticky=W)
+    way_right.grid(column=1, row=8, sticky=W)
 
-    # ROW 9 - Exit Button
+    # ROW 9 - Tooltip?
+
+    # ROW 10 - Tooltip Label
+
+    # ROW 11 - Dropdown?
+
+    # ROW 12 - Exit Button
 
 
 
