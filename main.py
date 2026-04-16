@@ -16,7 +16,7 @@ setup:s
         - Waybar position (Left, Center, Right)                 (waybar_pos)
         - Icon name (for config/style decleration)              (icon_name)
         - Nerd font icon                                        (nerd_icon)
-        - Icon Color                                            (icon_color)
+        - Icon Color                                            (color)
         - Tooltip?                                              (tool_bool)
             - Tooltip                                           (tooltip)
         - Command to run                                        (command)
@@ -29,6 +29,8 @@ setup:s
 3) Modify config.json
     - See manage_config.py
 '''
+
+
 waybar_pos = "LEFT"     # Waybar is a global as it needs to be stored to help label buttons
 color = 0               # Color is stored to ensure the color label is changed accurately
 
