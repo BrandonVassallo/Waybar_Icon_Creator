@@ -223,6 +223,7 @@ def prompt_user():
 
     # ROW 15 - Exit Button
     ttk.Button(window, text="Finished?", command=check_exit).grid(column=0, row=15)
+    ttk.Button(window, text="Cancel", command=root.destroy).grid(column=1, row=15)
 
     window.mainloop()
 
