@@ -29,8 +29,8 @@ setup:s
 3) Modify config.json
     - See manage_config.py
 '''
-waybar_pos = "LEFT"
-color = 0
+waybar_pos = "LEFT"     # Waybar is a global as it needs to be stored to help label buttons
+color = 0               # Color is stored to ensure the color label is changed accurately
 
 def prompt_user():
 
@@ -38,17 +38,23 @@ def prompt_user():
     ### Define Button Functions ###
     ###############################
 
-
+    '''
+    Runs the COLOR Button and the tkinter builtin color chooser
+    '''
     def color_picker():
         global color
         color = colorchooser.askcolor(title="Choose Icon Color")
 
         # The color is represneted as a tuple: ((R, G, B), "#rrbbgg")
-        if color[1] is not None:
+        if color[1] is not None:    # We only need the hex value
             selected_color.config(text=f"Selected Color is: {color[1]}", bg=color[1])
 
         color = color[1]
 
+
+    '''
+    These three functions change the waybar position global variable
+    '''
     def set_way_left():
         global waybar_pos
         waybar_pos = "LEFT"
@@ -64,22 +70,30 @@ def prompt_user():
         waybar_pos = "CENTER"
         update_waybar_buttons()
 
+    
+    '''
+    Updates the selected waybar position by highlighting it's respective button
+    '''
     def update_waybar_buttons():
         if waybar_pos == "LEFT":
-            way_left.config(bg="Green")
+            way_left.config(bg="Green")     # Label left as green
             way_center.config(bg="White")
             way_right.config(bg="White")
 
         elif waybar_pos == "CENTER":
             way_left.config(bg="White")
-            way_center.config(bg="Green")
+            way_center.config(bg="Green")   # Label center as green
             way_right.config(bg="White")
 
         elif waybar_pos == "RIGHT":
             way_left.config(bg="White")
-            way_center.config(bg="White")
-            way_right.config(bg="Green")
+            way_center.config(bg="White")   
+            way_right.config(bg="Green")    # Label right as green
 
+
+    '''
+    Shows or removes the tooltip Entry box depending on the tooltip checkbox status
+    '''
     def update_tooltip_bool():
         if tool_bool.get() == False:
             # Turn off tooltip entry
@@ -90,40 +104,64 @@ def prompt_user():
             tool_label.grid()
             tool_entry.grid()
 
+
+    '''
+    Shows or removes the dropdown number Entry box depending on the dropdown checkbox status
+    '''
     def update_dropdown_bool():
         if drop_bool.get() == False:
-            # Turn off tooltip entry
+            # Turn off dropdown number entry
             drop_label.grid_remove()
             drop_entry.grid_remove()
         else:
-            # Turn on tooltip entry
+            # Turn on dropdown number entry
             drop_label.grid()
             drop_entry.grid()
 
     def check_exit():
+        '''
+        NOTE: BELOW FUNCTION NOT IMPLEMENTED
+
+        MUST ALSO CHECK FOR Dropdown Number Entry BEING AN INTEGER
+        ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ 
+        '''
         if icon_name.get() != "" and nerd_icon.get() != "" and command.get() != "" and color != 0:
+            # Reset all labels to Black
+            icon_name_label.config(fg="Black")
+            nerd_label.config(fg="Black")
+            command_label.config(fg="Black")
+            color_label.config(fg="Black")
+
             # RUN CONFORMATION CODE
             confirmed = confirmation_ui.confirm(window, icon_name, nerd_icon, command, color, waybar_pos, tool_bool, tooltip, drop_bool, drop_num)
-            print(confirmed)
+            print(confirmed)    # Debugging, can be removed
             if confirmed:
-                print("CONFIRMED")
-                root.destroy()
+                print("CONFIRMED")  # Debugging, can be removed
+                root.destroy()      # Close the current window
+
+                # >>>>>>>>>> RUN THE BUILDER FILES <<<<<<<<<<
+
+        
         else:
+            # ICON NAME is required
             if icon_name.get() == "":
                 icon_name_label.config(fg="Red")
             else:
                 icon_name_label.config(fg="Black")
 
+            # ICON is required
             if nerd_icon.get() == "":
                 nerd_label.config(fg="Red")
             else:
                 nerd_label.config(fg="Black")
 
+            # COMMAND is required
             if command.get() == "":
                 command_label.config(fg="Red")
             else:
                 command_label.config(fg="Black")
 
+            # COLOR is required
             if color == 0:
                 color_label.config(fg="Red")
             else:
