@@ -6,6 +6,7 @@ from tkinter import colorchooser
 import write_xml
 import manage_config
 import manage_style
+import confirmation_ui
 
 '''
 setup:s
@@ -102,7 +103,11 @@ def prompt_user():
     def check_exit():
         if icon_name.get() != "" and nerd_icon.get() != "" and command.get() != "" and color != 0:
             # RUN CONFORMATION CODE
-            root.destroy()
+            confirmed = confirmation_ui.confirm(window, icon_name, nerd_icon, command, color, waybar_pos, tool_bool, tooltip, drop_bool, drop_num)
+            print(confirmed)
+            if confirmed:
+                print("CONFIRMED")
+                root.destroy()
         else:
             if icon_name.get() == "":
                 icon_name_label.config(fg="Red")
@@ -222,8 +227,8 @@ def prompt_user():
     ttk.Label(window, text=" ").grid(column=0, row=14)
 
     # ROW 15 - Exit Button
-    ttk.Button(window, text="Finished?", command=check_exit).grid(column=0, row=15)
-    ttk.Button(window, text="Cancel", command=root.destroy).grid(column=1, row=15)
+    ttk.Button(window, text="Finished?", command=check_exit).grid(column=0, row=15, sticky=E)
+    ttk.Button(window, text="Cancel", command=root.destroy).grid(column=1, row=15, sticky=W)
 
     window.mainloop()
 
