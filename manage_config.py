@@ -1,5 +1,8 @@
 # This File is responsible for modifying the config.json file
 
+import tkinter as tk
+from tkinter import *
+
 '''
 HOW TO:
 
@@ -56,3 +59,72 @@ menu_cmd_X
     - The command executed when the dropdown element is selected
 
 '''
+
+
+'''
+Creates the dropdown UI entrance
+'''
+def dropdown_UI(drop_num):
+    drop_array = []     # Used to store all of the Dropdown elements
+
+    '''
+    Debugging function for the Finished? button
+    '''
+    def print_out():
+        j = 1
+        for tup in drop_array:
+            print(f"ELEMENT: {j}")
+            print(f"NAME: {tup[0].get()}")
+            print(f"LABEL: {tup[1].get()}")
+            print(f"COMMAND: {tup[2].get()}\n")
+            j += 1
+
+        root.destroy()     
+
+    root = tk.Tk()
+    window = tk.Frame(root, padx=10, pady=10)
+    window.grid()
+
+    # ROW 0 - Spacing
+    tk.Label(window, text="    ").grid(column=0, row=0)
+
+    # ROW 1 - Label
+
+    tk.Label(window, text="Display Name").grid(column=0, row=1)
+    tk.Label(window, text="Label (For code)").grid(column=1, row=1)
+    tk.Label(window, text="Command").grid(column=2, row=1)
+
+    for i in range(drop_num):       # Move through each row, adding each entry label
+        # DROPDOWN NAME ENTRIES
+        drop_name_temp = tk.StringVar()
+        drop_name_entry = tk.Entry(window, width=30, textvariable=drop_name_temp)
+        drop_name_entry.grid(row=i+2, column=0)
+
+        # DROPDOWN LABEL ENTRIES
+        drop_label_temp = tk.StringVar()
+        drop_label_entry = tk.Entry(window, width=30, textvariable=drop_label_temp)
+        drop_label_entry.grid(row=i+2, column=1)
+
+        # DROPDOWN COMMAND ENTRIES
+        drop_command_temp = tk.StringVar()
+        drop_command_entry = tk.Entry(window, width=30, textvariable=drop_command_temp)
+        drop_command_entry.grid(row=i+2, column=2)
+
+        # Tuple format is always (DISPLAY NAME, LABEL, COMMAND)
+        drop_tupple = (drop_name_temp, drop_label_temp, drop_command_temp)
+
+        drop_array.append(drop_tupple)      # Add each tuple to the drop array
+
+    tk.Button(window, text="Finished?", command=root.destroy).grid(column=0, row=drop_num+2, sticky=E)
+
+    root.mainloop()
+    
+    return drop_array
+
+def manage_config(icon_name, nerd_icon, command, tool_bool, tooltip, dropdown_elements):
+    # Input the stuff into the config file
+    pass
+
+# Debugging:
+# d_num = 2
+# dropdown_UI(d_num)

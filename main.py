@@ -120,6 +120,13 @@ def prompt_user():
             drop_label.grid()
             drop_entry.grid()
 
+    def is_drop_num():
+        try: 
+            temp = int(drop_num.get())
+            return True
+        except ValueError:
+            return False
+
     def check_exit():
         '''
         NOTE: BELOW FUNCTION NOT IMPLEMENTED
@@ -127,7 +134,7 @@ def prompt_user():
         MUST ALSO CHECK FOR Dropdown Number Entry BEING AN INTEGER
         ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ 
         '''
-        if icon_name.get() != "" and nerd_icon.get() != "" and command.get() != "" and color != 0:
+        if icon_name.get() != "" and nerd_icon.get() != "" and command.get() != "" and color != 0 and is_drop_num():
             # Reset all labels to Black
             icon_name_label.config(fg="Black")
             nerd_label.config(fg="Black")
@@ -142,6 +149,10 @@ def prompt_user():
                 root.destroy()      # Close the current window
 
                 # >>>>>>>>>> RUN THE BUILDER FILES <<<<<<<<<<
+
+                if drop_bool:
+                    drop_array = manage_config.dropdown_UI(int(drop_num.get()))
+                    manage_config.manage_config(icon_name, nerd_icon, command, tool_bool, tooltip, drop_array)
 
         
         else:
@@ -168,6 +179,12 @@ def prompt_user():
                 color_label.config(fg="Red")
             else:
                 color_label.config(fg="Black")
+
+            # DROPDOWN NUMBER must be an integer
+            if drop_bool.get() and not is_drop_num():
+                drop_label.config(fg="Red")
+            else:
+                drop_label.config(fg="Black")
                 
 
     ########################
